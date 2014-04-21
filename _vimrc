@@ -53,6 +53,7 @@ set history=700
 " Enable filetype plugins
 filetype plugin on
 filetype indent on
+execute pathogen#infect()
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -131,7 +132,8 @@ set tm=500
 " Enable syntax highlighting
 syntax enable
 
-colorscheme desert
+colorscheme Solarized
+set guifont=Consolas:h11
 set background=dark
 
 " Set extra options when running in GUI mode
@@ -350,7 +352,7 @@ map <leader>q :e ~/buffer<cr>
 map <leader>pp :setlocal paste!<cr>
 
 " Fast Normal Mode
-inoremap jk <ESC>
+inoremap jj <ESC>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -412,3 +414,9 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+" Vundle Plugin
+"  set the runtime path to include Vundle and initialize
+set rtp+=~/vimfiles/bundle/vundle/
+let path='~/vimfiles/bundle'
+call vundle#rc(path)
