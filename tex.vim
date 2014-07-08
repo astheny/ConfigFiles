@@ -43,28 +43,41 @@ endif " exists("loaded_matchit")
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-set iskeyword+=:
 " vim:sts=2:sw=2:
 
-" Für alt- Makros
-"
+" this is mostly a matter of taste. but LaTeX looks good with just a bit
+" of indentation.
 set sw=2
-set nu
-set winaltkeys=no
-" IMAP für Bachelorarbeit
-augroup IMAPBA
-  au!
-  au VimEnter * call IMAP('DF','\DF{<++>}<++>', 'tex')
-augroup END
-imap ä "a
-imap ö "o
-imap ü "u
-imap ß "s
-imap Ä "A
-imap Ö "O
-imap Ü "u
-imap << \leq
-imap >> \geq
+" TIP: if you write your \label's as \label{fig:something}, then if you
+" type in \ref{fig: and press <C-n> you will automatically cycle through
+" all the figure labels. Very useful!
+set iskeyword+=:
 
-" Auto "- Ersetzen aus
+set wildignore+="*.aux"
+" Latex Mappings
+inoremap << \leq
+inoremap >> \geq
+inoremap ä "a
+inoremap ö "o
+inoremap ü "u
+inoremap Ä "A
+inoremap Ö "O
+inoremap Ü "U
+
+" Bachelorarbeit
+inoremap EG E(G)
+inoremap VG V(G)
+inoremap KZ Krauszzerlegung
+
+let g:Tex_CompileRule_pdf = 'pdflatex --synctex=-1 -src-specials -interaction=nonstopmode $*'
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_MultipleCompileFormats='pdf, aux'
+let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +\%l \%f\""'
 let g:Tex_SmartKeyQuote=0
+
+set winaltkeys=no
+augroup MyIMAPs
+    au!
+    au VimEnter * call IMAP('<<', '\leq', '')
+    au VimEnter * call IMAP('>>', '\geq', '')
+augroup END
